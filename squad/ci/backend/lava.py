@@ -61,6 +61,8 @@ class Backend(BaseBackend):
             except Exception as e:
                 # TODO: at least log error
                 pass
+    def poll(self):
+        pass  # TODO
 
     # ------------------------------------------------------------------------
     # implementation details

@@ -25,6 +25,7 @@ class Backend(models.Model):
         default='null',
     )
     poll_interval = models.IntegerField(default=60)  # minutes
+    last_poll = models.DateTimeField(null=True, default=None, blank=True)
 
     def poll(self):
         for test_job in self.test_jobs.filter(submitted=True, fetched=False):
@@ -74,3 +75,7 @@ class TestJob(models.Model):
     # output
     job_id = models.CharField(null=True, max_length=128, blank=True)
     job_status = models.CharField(null=True, max_length=128, blank=True)
+
+    # output
+    job_id = models.CharField(null=True, max_length=128)
+    job_status = models.CharField(null=True, max_length=128)

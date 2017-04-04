@@ -26,7 +26,6 @@ class Migration(migrations.Migration):
                 ('token', models.CharField(max_length=1024)),
                 ('implementation_type', models.CharField(choices=[('lava', 'LAVA'), ('null', 'None')], default='null', max_length=64)),
                 ('poll_interval', models.IntegerField(default=60)),
-                ('last_poll', models.DateTimeField(blank=True, default=None, null=True)),
             ],
         ),
         migrations.CreateModel(

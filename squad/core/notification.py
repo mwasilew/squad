@@ -106,7 +106,9 @@ def __send_notification__(project, notification):
     )
     sender = "%s <%s>" % (settings.SITE_NAME, settings.EMAIL_FROM)
 
-    emails = [r.email for r in recipients]
+    # if there are more then 1 identical addresses, there is no point
+    # in sending the same message twice
+    emails = set([r.email_address for r in recipients])
 
     message = EmailMultiAlternatives(subject, text_message, sender, emails)
     if project.html_mail:

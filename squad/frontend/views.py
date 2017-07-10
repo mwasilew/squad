@@ -4,6 +4,7 @@ import mimetypes
 import os
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -29,6 +30,15 @@ def group(request, group_slug):
         'projects': group.projects.accessible_to(request.user),
     }
     return render(request, 'squad/group.html', context)
+
+
+@login_required
+def profile(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    context = {
+        'user': user
+    }
+    return render(request, 'squad/user_profile.html', context)
 
 
 @auth

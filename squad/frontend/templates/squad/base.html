@@ -36,7 +36,7 @@
         <div class="collapse navbar-collapse">
           <ul id='user-menu' class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            <li><a><i class='fa fa-user-circle'></i> {{ user.username }}</a></li>
+            <li><a href="/_/profile/{{ user.id }}"><i class='fa fa-user-circle'></i> {{ user.username }}</a></li>
             {% if user.is_staff %}
             <li><a href="/admin/"><i class='fa fa-gear'></i> Administration</a></li>
             {% endif %}

@@ -1,0 +1,22 @@
+{% extends "squad/base.html" %}
+{% load squad %}
+{% load static %}
+
+{% block content %}
+<h3>Profile</h3>
+<ul>
+    <li> Username: {{ user.username }}
+    <li> Real Name: {{ user.first_name }} {{ user.last_name }}
+    <li> Email: {{ user.email }}
+</ul>
+<h4>Subscriptions</h4>
+<ul>
+    {% for subscription in user.subscriptions.all %}
+    <li>{{ subscription.project }} (use HTML: {{ subscription.project.html_mail }})
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+{% block javascript %}
+{% endblock %}

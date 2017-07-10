@@ -4,10 +4,12 @@ from collections import OrderedDict
 
 
 from dateutil.relativedelta import relativedelta
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.db.models.query import prefetch_related_objects
 from django.contrib.auth.models import Group as UserGroup
+from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 from django.core.validators import RegexValidator
 from django.utils import timezone
@@ -500,10 +502,26 @@ class MetricsSummary(object):
 
 class Subscription(models.Model):
     project = models.ForeignKey(Project, related_name='subscriptions')
-    email = models.CharField(max_length=1024, validators=[EmailValidator()])
+    email = models.CharField(max_length=1024, validators=[EmailValidator()], null=True, blank=True)
+    user = models.ForeignKey(User, related_name="subscriptions", null=True, blank=True)
+
+    @property
+    def email_address(self):
+        # user.email takes 1st priority if set
+        if self.user is not None and self.user.email is not None:
+            return self.user.email
+        return email
+
+    def clean(self, *args, **kwargs):
+        if not self.email and not self.user:
+            raise ValidationError('Subscription requires either email or user to be set')
+        return super(Subscription, self).clean()
 
     def __str__(self):
-        return '%s on %s' % (self.email, self.project)
+        email = self.email
+        if self.user is not None and self.user.email is not None:
+            email = self.user.email
+        return '%s on %s' % (email, self.project)
 
 
 class AdminSubscription(models.Model):

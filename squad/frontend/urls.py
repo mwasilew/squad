@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^favicon.ico$', lambda _: redirect(settings.MEDIA_URL + '/static/favicon.ico')),
     url(r'^robots.txt$', lambda _: HttpResponse("User-agent: *\nDisallow: /\n", content_type='text/plain')),
     url(r'^$', views.home, name='home'),
+    url(r'^_/profile/([0-9]+)$', views.profile, name='profile'),
     url(r'^_/compare/$', comparison.compare_projects, name='compare_projects'),
     url(r'^(%s)/$' % slug_pattern, views.group, name='group'),
     url(r'^(%s)/(%s)/$' % ((slug_pattern,) * 2), views.project, name='project'),

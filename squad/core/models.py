@@ -176,11 +176,11 @@ class Build(models.Model):
 
     @property
     def test_runs_completed(self):
-        return len(self.test_runs.filter(completed=True))
+        return self.test_runs.filter(completed=True)
 
     @property
     def test_runs_incomplete(self):
-        return len(self.test_runs.filter(completed=False))
+        return self.test_runs.filter(completed=False)
 
 
 def dict_intersection(d1, d2):
